@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    volumes:
+    - db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: postgres
+      POSTGRES_DB: inventory_management
+    ports:
+    - "5432:5432"
+
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+volumes:
+  db:
